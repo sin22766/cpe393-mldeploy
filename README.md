@@ -1,5 +1,15 @@
 # CPE393 ML deployment assignment
 This repository contains the source for the ML deployment assignments.
 
-* For the exercise 1 - 4, the code will be in IrisClassifier project
-* For the exercist 5 - 6, the code will be in HousePriceRegressor project
+## Project Structure
+* The project is divided into two parts:
+  * Iris Classifier
+  * House Price Regressor
+
+### Iris Classifier
+This is a simple Iris flower classifier for the CPE393 ML deployment assignment.
+[Here](./iris-classifier/README.md) is the detailed description
+
+### House Price Regressor
+This is a simple house price regressor for the CPE393 ML deployment assignment.
+[Here](./house-price-regressor/README.md) is the detailed description
