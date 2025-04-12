@@ -18,6 +18,11 @@ def home():
     return "ML Model is Running"
 
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
 class PredictInput(BaseModel):
     features: list[list[float]]
 
@@ -29,22 +34,29 @@ class PredictOutput(BaseModel):
 
 def validate_features(features: list[list[float]]) -> PredictInput:
     if not features:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, 
-                            detail="Features is not exist.")
-    
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Features is not exist."
+        )
+
     if not isinstance(features, list):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, 
-                            detail="Features should be a list.")
-    
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Features should be a list."
+        )
+
     if not all(len(i) == 4 for i in features):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Features should contain exactly 4 values.")
-    
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Features should contain exactly 4 values.",
+        )
+
     if not all(isinstance(i, (int, float)) for sublist in features for i in sublist):
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail="Features should contain only numbers.")
-    
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Features should contain only numbers.",
+        )
+
     return PredictInput(features=features)
+
 
 @app.post("/predict")
 def predict(input: Dict) -> list[PredictOutput]:
