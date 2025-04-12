@@ -11,8 +11,7 @@ This will train the model and save it to the `app` directory.
 ## Development
 To run the app, run the following command:
 ```bash
-cd app
-fastapi dev ./main.py
+fastapi dev ./app/main.py
 ```
 This will start the FastAPI server on `http://localhost:8000`.
 

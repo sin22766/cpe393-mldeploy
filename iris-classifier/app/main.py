@@ -3,13 +3,16 @@ from fastapi import FastAPI, HTTPException, status
 from pydantic import BaseModel
 import pickle
 import numpy as np
+import os
 from sklearn.ensemble import RandomForestClassifier
+
+current_dir = os.path.dirname(os.path.abspath(__file__))
+model_path = os.path.join(current_dir, "model.pkl")
 
 app = FastAPI()
 
-
 # Load the trained model
-with open("model.pkl", "rb") as f:
+with open(model_path, "rb") as f:
     model: RandomForestClassifier = pickle.load(f)
 
 

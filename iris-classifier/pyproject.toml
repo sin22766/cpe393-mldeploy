@@ -1,7 +1,7 @@
 [project]
 name = "iris-classifier"
 version = "0.1.0"
-description = "Add your description here"
+description = "Iris flower classifier model"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
