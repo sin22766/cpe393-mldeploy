@@ -8,8 +8,8 @@ This repository contains the source for the ML deployment assignments.
 
 ### Iris Classifier
 This is a simple Iris flower classifier for the CPE393 ML deployment assignment.
-[Here](./iris-classifier/README.md) is the detailed description
+[Here](./iris-classifier) is the Iris classifier.
 
 ### House Price Regressor
 This is a simple house price regressor for the CPE393 ML deployment assignment.
-[Here](./house-price-regressor/README.md) is the detailed description
+[Here](./house-price-regressor) is the Hose Price regressor.
