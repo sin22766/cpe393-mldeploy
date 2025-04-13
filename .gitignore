@@ -9,5 +9,8 @@ wheels/
 # Virtual environments
 .venv
 
+# VS Code settings
+.vscode/
+
 # Models
 model.pkl
