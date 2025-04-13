@@ -1,6 +1,5 @@
-from typing import Dict
-from fastapi import FastAPI, HTTPException, status
-from pydantic import BaseModel
+from fastapi import FastAPI
+from pydantic import BaseModel, Field
 import pickle
 import numpy as np
 import os
@@ -27,7 +26,7 @@ def health():
 
 
 class PredictInput(BaseModel):
-    features: list[list[float]]
+    features: list[tuple[float, float, float, float]] = Field(..., min_length=1)
 
 
 class PredictOutput(BaseModel):
@@ -35,37 +34,9 @@ class PredictOutput(BaseModel):
     confidence: float
 
 
-def validate_features(features: list[list[float]]) -> PredictInput:
-    if not features:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Features is not exist."
-        )
-
-    if not isinstance(features, list):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, detail="Features should be a list."
-        )
-
-    if not all(len(i) == 4 for i in features):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Features should contain exactly 4 values.",
-        )
-
-    if not all(isinstance(i, (int, float)) for sublist in features for i in sublist):
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Features should contain only numbers.",
-        )
-
-    return PredictInput(features=features)
-
-
 @app.post("/predict")
-def predict(input: Dict) -> list[PredictOutput]:
-    predict_input = validate_features(input.get("features"))
-
-    input_features = np.array(predict_input.features)
+def predict(input: PredictInput) -> list[PredictOutput]:
+    input_features = np.array(input.features)
     prediction_probas = model.predict_proba(input_features)
 
     result = [
