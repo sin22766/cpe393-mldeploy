@@ -53,11 +53,11 @@ class PredictInput(BaseModel):
 
 
 class PredictOutput(BaseModel):
-    prediction: list[float] = Field(..., description="Predicted price of the house")
+    prediction: float = Field(..., description="Predicted price of the house")
 
 
 @app.post("/predict")
-def predict(input: PredictInput) -> PredictOutput:
+def predict(input: PredictInput) -> list[PredictOutput]:
     try:
         # Extract features
         features = input.model_dump()["features"]
@@ -69,7 +69,9 @@ def predict(input: PredictInput) -> PredictOutput:
         predictions = model.predict(df).round(2)
 
         # Return the prediction
-        return PredictOutput(prediction=predictions.tolist())
+        return [
+            PredictOutput(prediction=pred) for pred in predictions
+        ]
 
     except Exception as e:
         raise HTTPException(
