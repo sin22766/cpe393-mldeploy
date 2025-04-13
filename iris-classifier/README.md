@@ -19,6 +19,33 @@ This will start the FastAPI server on `http://localhost:8000`.
 To deploy the app, run the following command:
 ```bash
 docker build -t iris-classifier .
-docker run -p 8000:80 iris-classifier
+docker run -p 9000:9000 iris-classifier
 ```
-This will build the Docker image and run the container on port 8000.
+This will build the Docker image and run the container on port 9000.
+
+## Sample Request
+To test the model, you can use the following curl command:
+```bash
+curl --request POST \
+  --url http://localhost:9000/predict \
+  --header 'content-type: application/json' \
+  --data '{
+  "features": [
+    {
+      "area": 8372,
+      "bedrooms": 3,
+      "bathrooms": 1,
+      "stories": 3,
+      "mainroad": true,
+      "guestroom": false,
+      "basement": false,
+      "hotwaterheating": false,
+      "airconditioning": true,
+      "parking": 2,
+      "prefarea": false,
+      "furnishingstatus": 0
+    }
+  ]
+}'
+```
+This will send a POST request to the `/predict` endpoint with the features of the house. The response will be a JSON object with the predicted price of the house.
